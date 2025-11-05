@@ -131,6 +131,9 @@ module.exports = function (router) {
 
         const task = await Task.findById(req.params.id);
         if (!task) return res.status(404).json(wrapErr('Task not found', {}));
+        if (task.completed) {
+          return res.status(400).json(wrapErr('Cannot modify a completed task', {}));
+        }
 
         const oldAssignedUser = task.assignedUser || '';
         const oldCompleted = !!task.completed;
