@@ -1,10 +1,27 @@
-// Load required packages
+// models/user.js
 var mongoose = require('mongoose');
 
-// Define our user schema
 var UserSchema = new mongoose.Schema({
-    name: String
-});
+  name: {
+    type: String,
+    required: [true, 'User name is required']
+  },
+  email: {
+    type: String,
+    required: [true, 'User email is required'],
+    unique: true,
+    trim: true
+  },
+  pendingTasks: {
+    type: [String],
+    default: []
+  },
+  dateCreated: {
+    type: Date,
+    default: Date.now
+  }
+}, { versionKey: false });
 
-// Export the Mongoose model
+UserSchema.index({ email: 1 }, { unique: true });
+
 module.exports = mongoose.model('User', UserSchema);
