@@ -153,7 +153,7 @@ module.exports = function (router) {
         );
 
         await user.deleteOne();
-        return res.status(200).json(wrapOk('User Deleted', {}));
+        return res.status(204).json(wrapOk('User Deleted', {}));
       } catch (err) {
         return res.status(500).json(wrapErr('Server error deleting user', {}));
       }
